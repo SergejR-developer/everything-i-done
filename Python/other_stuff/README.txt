@@ -1,0 +1,1 @@
+Simmilar to MICROPROJECTS in C. Just easy programs to try something out

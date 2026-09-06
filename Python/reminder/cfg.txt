@@ -1,0 +1,5 @@
+[CONFIG]
+WORK_TIME = 10
+REST_TIME = 20
+BEEP1 = beep1.wav
+BEEP2 = beep2.wav
