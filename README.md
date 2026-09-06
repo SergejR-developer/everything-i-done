@@ -1,1 +1,1 @@
-"# everything-i-done" 
+Every project I've ever done outside of uni grouped by language. Feel free to give critique/word of advice as I'm just a beginner 
