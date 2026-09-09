@@ -14,13 +14,13 @@ import configparser
 #CONFIG
 
 config = configparser.ConfigParser()
-config.read_file(open(os.getcwd() + r'\reminder\cfg.txt'))
+config.read_file(open(os.getcwd() + r"\Python\reminder\cfg.txt"))
 
 WORK_TIME = config.get('CONFIG', 'WORK_TIME')
 REST_TIME = config.get('CONFIG', 'REST_TIME')
 
-BEEP1 = config.get('CONFIG', 'BEEP1')
-BEEP2 = config.get('CONFIG', 'BEEP2')
+BEEP1 = os.getcwd() + r'\Python\reminder' + config.get('CONFIG', 'BEEP1')
+BEEP2 = os.getcwd() + r'\Python\reminder' + config.get('CONFIG', 'BEEP2')
 
 #------
 
