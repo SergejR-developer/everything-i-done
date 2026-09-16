@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdbool.h>
+#include <ctype.h>
 
 #define TOP(field) ((field[0] == field[1]) && (field[1] == field[2]))
 #define MIDDLE(field) ((field[3] == field[4]) && (field[4] == field[5]))
@@ -41,18 +42,21 @@ int main(){
             draws++;
         }
         
-        while (continuation != 'Y' || continuation != 'n' || continuation != 'y' || continuation != 'N')
+        while (continuation != 'Y' ||
+               continuation != 'n' || 
+               continuation != 'y' || 
+               continuation != 'N')
         {
             printf("\nContinue? [Y/n] ");
             scanf(" %c", &continuation);
 
-            if (continuation == 'N' || continuation == 'n')
+            if (toupper(continuation) == 'N')
             {
                 printf("\nThanks for playing!\n");
                 printf("Games Played\txWins\toWins\tDraws\n%d\t\t%d\t%d\t%d\n", gamesCount, xWins, oWins, draws);
                 return 0;
             }
-            else if (continuation == 'Y' || continuation == 'y')
+            else if (toupper(continuation) == 'Y')
             {
                 break;
             }
@@ -131,8 +135,9 @@ char gameLoop(){
 
         field[choice-1] = player;
 
-        if (player == 'X') { player = 'O'; }
-        else { player = 'X'; }
+        player = (player == 'X') ? 'O' : 'X';
+        /*if (player == 'X') { player = 'O'; }
+        else { player = 'X'; }*/
         }
     }
 }
