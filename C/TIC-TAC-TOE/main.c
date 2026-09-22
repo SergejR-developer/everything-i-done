@@ -136,8 +136,6 @@ char gameLoop(){
         field[choice-1] = player;
 
         player = (player == 'X') ? 'O' : 'X';
-        /*if (player == 'X') { player = 'O'; }
-        else { player = 'X'; }*/
         }
     }
 }
