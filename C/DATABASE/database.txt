@@ -1,3 +1,0 @@
-ID, FIRST NAME, LAST NAME, AGE
-1, Adam, Smith, 303
-2, Karl, Marx, 208

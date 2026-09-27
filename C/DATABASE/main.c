@@ -1,6 +1,12 @@
+/*
+This project represents atempt to understand how to work with .txt files in C.
+Writes or appends to a file depending on whether it exists or not
+*/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
 
 typedef struct{
     int id;
@@ -9,27 +15,73 @@ typedef struct{
     int age;
 } Person;
 
-void writeToFile(Person persons[], int nPersons, char mode[]);
+const char cols[] = "ID, FIRST NAME, LAST NAME, AGE\n"; 
+
+void writeToFile();
+char modeForFile();
 
 int main()
 {
-    Person persons[] = {{1, "Adam", "Smith", 303}, 
-                        {2, "Karl", "Marx", 208}};
-
-    int nPersons = sizeof(persons) / sizeof(persons[0]);
-    
-    for(int i = 0; i < nPersons; i++)
+    int choice = 0;
+    printf("Welcome to the database. Columns are as follows: %s\nWhat are you interested in?\n", cols);
+    printf("1. Write to the file\n2. Read from the file (Under Development)\n3. Change line in the file (Under Development)\n");
+    printf("Enter your choice: ");
+ 
+    while(choice != 1 || choice != 2 || choice != 3)
     {
-        printf("Id: %d, Full name: %s %s, Age: %d\n", persons[i].id, persons[i].firstName, persons[i].lastName, persons[i].age);
-    }
+        scanf(" %d", &choice);
 
-    writeToFile(persons, nPersons, "a");
+        switch (choice)
+        {
+            case 1:
+                writeToFile();
+                break;
+            case 2:
+                printf("UNDER DEVELOPMENT");
+                return 0;
+                break;
+            case 3:
+                printf("UNDER DEVELOPMENT");
+                return 0;
+                break;
+            default:
+                printf("Please enter valid choice: ");
+                break;
+        }
+        break;
+    }
 
     return 0;
 }
 
-void writeToFile(Person persons[], int nPersons, char mode[1])
+void writeToFile()
 {
+    Person person = {};
+    char firstName[255] = "";
+    char lastName[255] = "";
+    char mode[1] = "";
+
+    printf("\nWRITING TO FILE\n");
+    printf("Enter ID: "); //Will be changed in the future
+    scanf("%d", &person.id);
+
+    getchar();
+    printf("Enter first name: ");
+    fgets(firstName, sizeof(firstName), stdin);
+    firstName[strlen(firstName) - 1] = '\0';
+
+    printf("Enter last name: ");
+    fgets(lastName, sizeof(lastName), stdin);
+    lastName[strlen(lastName) - 1] = '\0';
+
+    printf("Enter age: ");
+    scanf("%d", &person.age);
+
+    strcpy(person.firstName, firstName);
+    strcpy(person.lastName, lastName);
+
+    mode[0] = modeForFile();
+    
     FILE *f = fopen("database.txt", mode);
     if (f == NULL)
     {
@@ -37,22 +89,24 @@ void writeToFile(Person persons[], int nPersons, char mode[1])
         exit(1);
     }
 
-    switch (mode[0])
+    if(mode[0] == 'w')
     {
-    case 'w':
-        fprintf(f, "ID, FIRST NAME, LAST NAME, AGE\n");
-        break;
-    
-    case 'a':
-        for(int i = 0; i < nPersons; i++)
-        {
-            printf("Appending...\n");
-            fprintf(f, "%d, %s, %s, %d\n", 
-                    persons[i].id, persons[i].firstName,
-                    persons[i].lastName, persons[i].age);
-        }
-        break;
+        fprintf(f, "%s", cols);
     }
 
+    fprintf(f, "%d, %s, %s, %d\n", person.id, person.firstName, person.lastName, person.age);
+
     fclose(f);
+}
+
+char modeForFile()
+{
+    if(access("database.txt", F_OK) == 0)
+    {
+        return 'a'; //file exists
+    }
+    else
+    {
+        return 'w'; //file doesn't exist
+    }
 }
