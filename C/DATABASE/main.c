@@ -15,16 +15,18 @@ typedef struct{
     int age;
 } Person;
 
-const char cols[] = "ID, FIRST NAME, LAST NAME, AGE\n"; 
+const char cols[] = "ID, FIRST NAME, LAST NAME, AGE\n";
+const char filename[] = "database.txt";
 
 void writeToFile();
 char modeForFile();
+void printFromFile();
 
 int main()
 {
     int choice = 0;
     printf("Welcome to the database. Columns are as follows: %s\nWhat are you interested in?\n", cols);
-    printf("1. Write to the file\n2. Read from the file (Under Development)\n3. Change line in the file (Under Development)\n");
+    printf("1. Write to the file\n2. Print from the file\n3. Change line in the file (Under Development)\n");
     printf("Enter your choice: ");
  
     while(choice != 1 || choice != 2 || choice != 3)
@@ -37,8 +39,7 @@ int main()
                 writeToFile();
                 break;
             case 2:
-                printf("UNDER DEVELOPMENT");
-                return 0;
+                printFromFile();
                 break;
             case 3:
                 printf("UNDER DEVELOPMENT");
@@ -82,7 +83,7 @@ void writeToFile()
 
     mode[0] = modeForFile();
     
-    FILE *f = fopen("database.txt", mode);
+    FILE *f = fopen(filename, mode);
     if (f == NULL)
     {
         printf("ERROR");
@@ -101,12 +102,31 @@ void writeToFile()
 
 char modeForFile()
 {
-    if(access("database.txt", F_OK) == 0)
+    if(access(filename, F_OK) == 0)
     {
         return 'a'; //file exists
     }
     else
     {
         return 'w'; //file doesn't exist
+    }
+}
+
+void printFromFile()
+{
+    FILE *f = fopen(filename, "r");
+    if(access(filename, F_OK) != 0)
+    {
+        printf("FILE NOT FOUND");
+    }
+    else
+    {
+        char buffer[255] = "";
+        char element[255];
+
+        while(fgets(buffer, sizeof(buffer), f))
+        {
+            printf("%s", buffer);
+        }
     }
 }
